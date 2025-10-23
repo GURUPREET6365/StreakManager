@@ -31,7 +31,7 @@ DEBUG = os.getenv('DEBUG')
 # CSRF_TRUSTED_ORIGINS = ["https://unvigilantly-unvacillating-candance.ngrok-free.dev"]
 
 
-# 'localhost', '127.0.0.1','unvigilantly-unvacillating-candance.ngrok-free.dev'
+
 ALLOWED_HOSTS = []
 
 
