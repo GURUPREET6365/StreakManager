@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from pathlib import Path
+
+
 from dotenv import load_dotenv
 import dj_database_url
 
@@ -62,6 +65,7 @@ MIDDLEWARE = [
     # What is httprequest object is  When a client requests a page or resource from your Django application, Django processes this request and encapsulates all the relevant information into an HttpRequest object.This HttpRequest object is then passed as the first argument to the corresponding view function that handles the request. and it helps to get request like method i.e POST OR GET and sessionid, cookies when the client ask for page.
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware"
 ]
 
 ROOT_URLCONF = 'streakmanager.urls'
@@ -133,8 +137,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
