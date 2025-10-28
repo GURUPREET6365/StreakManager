@@ -39,16 +39,16 @@
                     <h5 class="mb-0">
                       {{ user.f_name|default:"User" }} {{ user.l_name }}
                     </h5>
-                    <button type="button" class="btn btn-link p-0 small" aria-label="Edit name">
+                    {% comment %} <button type="button" class="btn btn-link p-0 small" aria-label="Edit name">
                       <i class="bi bi-pencil-fill"></i>
-                    </button>
+                    </button> {% endcomment %}
                   </div>
 
                   <div class="d-flex align-items-center gap-2 text-muted">
                     <span>@{{ user.username }}</span>
-                    <button type="button" class="btn btn-link p-0 small" aria-label="Edit username">
+                    {% comment %} <button type="button" class="btn btn-link p-0 small" aria-label="Edit username">
                       <i class="bi bi-pencil-fill"></i>
-                    </button>
+                    </button> {% endcomment %}
                   </div>
                 </div>
               </div>
@@ -72,9 +72,9 @@
                         <div class="text-break">{{ user.email|default:"Not Provided" }}</div>
                       </div>
                       <div class="col-12 col-sm-1 text-sm-end">
-                        <button type="button" class="btn btn-link p-0 small" aria-label="Edit email">
+                        {% comment %} <button type="button" class="btn btn-link p-0 small" aria-label="Edit email">
                           <i class="bi bi-pencil-fill"></i>
-                        </button>
+                        </button> {% endcomment %}
                       </div>
                     </div>
                   </li>
