@@ -61,7 +61,6 @@
                                 <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
                                 <li><a class="dropdown-item" href="{% url 'show_streaks' %}">View All Streaks</a></li>
                                 <li><a class="dropdown-item" href="{% url 'view_dailygoals' %}">View All Goals</a></li>
-                                <li><hr class="dropdown-divider"></li>
                               
                             </ul>
                         </li>
@@ -77,13 +76,7 @@
                             </a>
                         </li>
                     {% endif %}
-
-                    <!-- Dark Mode Toggle -->
-                    <li class="nav-item dark-mode-item ms-2">
-                        <button id="darkModeToggle" class="dark-mode-btn" onclick="toggleDarkMode()" type="button" aria-label="Toggle dark mode">
-                            <i id="themeIcon" class="bi bi-moon"></i>
-                        </button>
-                    </li>
+                        
                 </ul>
             </div>
         </div>
