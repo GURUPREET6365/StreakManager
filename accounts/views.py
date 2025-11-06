@@ -51,13 +51,22 @@ def register_view(request):
                     to=[user.email]
                 )
                 email_obj.content_subtype = 'html'
-                email_obj.send(fail_silently=True)
+                email_obj.send(fail_silently=False)  # ✅ Changed to False to see errors
+                
+                messages.success(request, f'Verification email sent to {user.email}. Check your inbox.')
+                return redirect('login')
+                
             except Exception as e:
+                # Log the error for debugging
                 print(f"Email send error: {e}")
-                pass
-            
-            messages.success(request, f'Verification email sent to {user.email}. Check your inbox.')
-            return redirect('login')
+                import logging
+                logger = logging.getLogger(__name__)
+                logger.error(f"Email verification failed: {str(e)}")
+                
+                # Delete the user if email fails
+                user.delete()
+                messages.error(request, 'Failed to send verification email. Please try again.')
+                return redirect('register')
         else:
             for field, errors in form.errors.items():
                 for error in errors:
@@ -66,6 +75,7 @@ def register_view(request):
         form = CustomUserCreationForm()
     
     return render(request, 'accounts/register.html', {'form': form})
+
 
 def verify_email_view(request, uidb64, token):
     """
