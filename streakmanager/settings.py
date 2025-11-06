@@ -148,13 +148,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
 
+# EMAIL_BACKEND = os.getenv('EMAIL_BACKENED')
+# 
+
+# EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS ')
+# 
+# DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAI')
+
+# # Token expiration time (in seconds) — default is 3 days (259200 seconds)
+# 
+
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT=587
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT =int(os.getenv('EMAIL_PORT'))
 EMAIL_USE_TLS=True
-EMAIL_HOST_USER='streakmanager001@gmail.com'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 DEFAULT_FROM_EMAIL='streakmanager001@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # Generate this from Google Account Security settings)
-
-# Token expiration time (in seconds) — default is 3 days (259200 seconds)
-PASSWORD_RESET_TIMEOUT=259200
+PASSWORD_RESET_TIMEOUT = 3600 

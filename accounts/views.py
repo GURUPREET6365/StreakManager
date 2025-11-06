@@ -15,11 +15,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from .forms import CustomUserCreationForm
-from .tokens import email_verification_token
+from .tokens import EmailVerificationTokenGenerator
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+email_verification_token = EmailVerificationTokenGenerator()
 # Create your views here.
 def register_view(request):
     if request.method == 'POST':
@@ -28,60 +29,71 @@ def register_view(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
+
             token = email_verification_token.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
- # Build activation link
+            
             domain = get_current_site(request).domain
             protocol = 'https' if request.is_secure() else 'http'
-            activation_link = f"{protocol}://{domain}/verify-email/{uid}/{token}/"
+            verification_link = f"{protocol}://{domain}/verify-email/{uid}/{token}/"
             
-            # Prepare and send verification email
-            mail_subject = 'Verify your email address'
-            message = render_to_string('accounts/email_verification.html', {
-                'user': user,
-                'activation_link': activation_link,
-            })
+            try:
+                mail_subject = 'Verify your email address'
+                message = render_to_string('accounts/email_verification.html', {
+                    'user': user,
+                    'activation_link': verification_link,
+                })
+                
+                email_obj = EmailMessage(
+                    subject=mail_subject,
+                    body=message,
+                    from_email=os.getenv('EMAIL_HOST_USER', 'from@example.com'),
+                    to=[user.email]
+                )
+                email_obj.content_subtype = 'html'
+                email_obj.send(fail_silently=True)
+            except Exception as e:
+                print(f"Email send error: {e}")
+                pass
             
-            email = EmailMessage(
-                subject=mail_subject,
-                body=message,
-                from_email=os.getenv('DEFAULT_FROM_EMAIL'),  # Or use DEFAULT_FROM_EMAIL
-                to=[user.email]
-            )
-            email.content_subtype = 'html'  # Send as HTML
-            email.send()
-            
-            messages.success(
-                request,
-                f'Registration successful! A verification link has been sent to {user.email}. Please check your email (and spam folder) to activate your account.'
-            )
-            return redirect('login')  # Redirect to login page
+            messages.success(request, f'Verification email sent to {user.email}. Check your inbox.')
+            return redirect('login')
         else:
-            for error in form.errors.values():
-                messages.error(request, error)
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
     else:
         form = CustomUserCreationForm()
     
     return render(request, 'accounts/register.html', {'form': form})
 
 def verify_email_view(request, uidb64, token):
+    """
+    Decode uidb64 to get user ID, check token, activate user
+    """
     try:
-        # Decode the user ID
+        # Decode the encoded user ID
         uid = force_str(urlsafe_base64_decode(uidb64))
+        print(f"DEBUG: uid type = {type(uid)}, uid value = {uid}")  
+        uid = int(uid)
+        print(f"DEBUG: uid after int() = {uid}")
+        # Get the user
         user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, User.DoesNotExist):
+        print(f"DEBUG: user found = {user.pk}")
+        print(f'the type of the id is {type(user.pk)}')
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
     
-    # Check if token is valid
+    # Check if user exists and token is valid
     if user is not None and email_verification_token.check_token(user, token):
-        user.is_active = True  # Activate the user
+        # Activate the user
+        user.is_active = True
         user.save()
         messages.success(request, 'Your email has been verified! You can now log in.')
         return redirect('login')
     else:
-        messages.error(request, 'Activation link is invalid or has expired. Please register again.')
+        messages.error(request, 'Verification link is invalid or has expired.')
         return redirect('register')
-
     
 
 def login_view(request):
