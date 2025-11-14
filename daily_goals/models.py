@@ -11,6 +11,8 @@ class UsersGoals(models.Model):
     updated_at = models.DateTimeField()
     is_active = models.BooleanField(default=True)
     completed = models.BooleanField(default=False)
+    is_deleted = models.BooleanField(default=False)
+    deleted_at = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.title

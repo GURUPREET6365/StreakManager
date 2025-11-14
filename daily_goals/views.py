@@ -16,14 +16,19 @@ def create_dailygoals(request):
         description = request.POST.get('description')
         action = request.POST.get('action')  # ye "create_ones" ya "create_many" hoga
         
-        # Goal create karo
-        goal = UsersGoals.objects.create(
-            user=request.user,
-            title=title,
-            description=description,
-            completed=False,
-            updated_at=created_date
-        )
+        # if UsersGoals.objects.filter(title).exists(): # Error is happened due to we didn't provided the user and also the title correctly
+        if UsersGoals.objects.filter(user=request.user, title=title, is_deleted=False).exists():
+            messages.error(request, 'Title of the same name already exists.')
+
+        else:
+            # Goal create karo
+            goal = UsersGoals.objects.create(
+                user=request.user,
+                title=title,
+                description=description,
+                completed=False,
+                updated_at=created_date
+            )
         
         # Check karo kon sa button click hua
         if action == 'create_ones':
@@ -41,7 +46,7 @@ def create_dailygoals(request):
 @login_required
 def view_dailygoals(request):
     user_goal = UsersGoals.objects.filter(
-        user=request.user
+        user=request.user, is_deleted = False, is_active=True
     )
     today = timezone.localdate()
     all_goal=[]
@@ -86,7 +91,7 @@ def edit_dailygoals(request, pk):
         if form.is_valid():
             goal.updated_at=today
             form.save()  # ModelForm saves to goal automatically
-            messages.success(request, 'Goals Updated')
+            messages.success(request, 'Goal Updated')
             return redirect('view_dailygoals')  # Redirect after success (PRG pattern)
     else:
 
@@ -96,12 +101,21 @@ def edit_dailygoals(request, pk):
 
 
 def detailed_dailygoals(request, pk):
+    today = timezone.localdate()
     goal = get_object_or_404(UsersGoals, pk=pk, user=request.user)
-    return render(request, 'daily_goals/detailed_dailygoals.html', {'goal':goal,})
+    created_date = timezone.localdate(goal.created_at)
+    deadline_date = created_date + timedelta(days=1)
+    can_complete = (today <= deadline_date) and (not goal.completed)
+    cannot_complete = (today > deadline_date) and (not goal.completed)
+    return render(request, 'daily_goals/detailed_dailygoals.html', {'goal':goal, 'can_complete': can_complete, 'cannot_complete':cannot_complete, })
 
 def delete_dailygoals(request, pk):
+    today = timezone.localdate()
     goal = get_object_or_404(UsersGoals, pk=pk, user=request.user)
     if request.method == 'POST':
-        goal.delete()
+        goal.is_deleted = True
+        goal.is_active = False
+        goal.deleted_at = today
+        goal.save()
         return redirect('view_dailygoals')
     return redirect('view_dailygoals')

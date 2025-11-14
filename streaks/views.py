@@ -38,7 +38,7 @@ def show_streaks(request):
     .filter(): Gets multiple objects that match the conditions
     user=request.user: Only get streaks belonging to the logged-in user
     '''
-    user_streaks = Streak.objects.filter(user=request.user, is_active=True)
+    user_streaks = Streak.objects.filter(user=request.user, is_active=True, is_deleted = False)
     today = timezone.localdate() 
     # Send the streaks to the template
     return render(request, 'streaks/show_streaks.html', {'streaks': user_streaks, 'today': today})
@@ -106,9 +106,13 @@ def edit_streak(request, pk):
 
 @login_required
 def delete_streak(request, pk):
+    today = timezone.localdate()
     streak = get_object_or_404(Streak, pk=pk, user=request.user)
     if request.method == 'POST':
-        streak.delete()
+        streak.is_active=False
+        streak.is_deleted=True
+        streak.deleted_at=today
+        streak.save()
         messages.info(request, f'deleted streak {streak.title}')
         return redirect('show_streaks')
     

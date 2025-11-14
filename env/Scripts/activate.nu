@@ -47,7 +47,7 @@ export-env {
         }
     }
 
-    let virtual_env = r#'C:\MAIN FOLDER\GURUPREET\PROJECTS\STREAK MANAGER\env'#
+    let virtual_env = r#'C:\MAIN FOLDER\GURUPREET\PROJECTS\QuickPrep\env'#
     let bin = r#'Scripts'#
     let path_name = if (has-env 'Path') { 'Path' } else { 'PATH' }
     let venv_path = ([$virtual_env $bin] | path join)

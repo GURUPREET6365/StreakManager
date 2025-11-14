@@ -1,289 +1,344 @@
 {% extends "main.html" %}
+{% load static %}
 
-{% block title %}About Us{% endblock title %}
+{% block title %}About Us • QuickPrep{% endblock title %}
+
+<link rel="stylesheet" href="{% static 'css/about_us.css' %}">
 
 {% block content %}
-<div class="container my-5">
 
-  <!-- Navigation tabs for sections -->
-  <ul class="nav nav-tabs mb-4" id="aboutTabs" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button">
-        About Us
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="privacy-tab" data-bs-toggle="tab" data-bs-target="#privacy" type="button">
-        Privacy Policy
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="terms-tab" data-bs-toggle="tab" data-bs-target="#terms" type="button">
-        Terms of Service
-      </button>
-    </li>
-  </ul>
-
-  <!-- Tab content -->
-  <div class="tab-content" id="aboutTabsContent">
+<section style="padding: 3rem 0;">
+  <div class="container">
     
-    <!-- About Us Section -->
-    <div class="tab-pane fade show active" id="about" role="tabpanel">
-      <div class="card shadow-sm">
-        <div class="card-body p-4 p-md-5">
-          <h1 class="h3 mb-4">About Streak Manager</h1>
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+      <h1 style="color: #38bdf8; font-weight: 700; font-size: clamp(1.75rem, 4vw, 2.5rem);">About QuickPrep</h1>
+      <p style="color: #94a3b8; font-size: 1.1rem;">Learn more about our mission and values</p>
+    </div>
+
+    <!-- Navigation tabs for sections -->
+    <ul class="nav nav-tabs mb-4" id="aboutTabs" role="tablist" style="justify-content: center;">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab">
+          <i class="bi bi-info-circle me-2"></i>About Us
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="privacy-tab" data-bs-toggle="tab" data-bs-target="#privacy" type="button" role="tab">
+          <i class="bi bi-shield-lock me-2"></i>Privacy Policy
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="terms-tab" data-bs-toggle="tab" data-bs-target="#terms" type="button" role="tab">
+          <i class="bi bi-file-text me-2"></i>Terms of Service
+        </button>
+      </li>
+    </ul>
+
+    <!-- Tab content -->
+    <div class="tab-content" id="aboutTabsContent">
+      
+      <!-- About Us Section -->
+      <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+        <div class="about-card">
+          <h2>About QuickPrep</h2>
           
-          <h5 class="mt-4">Our Mission</h5>
+          <h5>🎯 Our Mission</h5>
           <p>
-            Streak Manager helps you build and maintain positive habits through simple daily tracking. 
-            We believe consistency is the key to personal growth, and our goal is to make habit tracking 
-            effortless and motivating.
+            QuickPrep is an AI-powered learning platform designed to help students master their preparation through intelligent note management, AI-generated practice questions, and personalized revision schedules. We believe that smart learning beats hard studying, and our goal is to make preparation smarter, faster, and more effective.
           </p>
 
-          <h5 class="mt-4">What We Offer</h5>
+          <h5>✨ What We Offer</h5>
           <ul>
-            <li><strong>Simple Tracking:</strong> Mark daily tasks complete with one click</li>
-            <li><strong>Progress Visualization:</strong> See your current and longest streaks at a glance</li>
-            <li><strong>Goal Management:</strong> Set and track daily goals alongside your habits</li>
-            <li><strong>Privacy First:</strong> Your data belongs to you and is kept secure</li>
+            <li><strong>Manage Notes:</strong> Organize and store all your study materials in one secure place with easy access from any device</li>
+            <li><strong>AI Practice:</strong> Get intelligent practice questions generated from your notes using advanced AI algorithms</li>
+            <li><strong>AI Revision:</strong> Smart reminders and auto-generated summaries for effective spaced revision learning</li>
+            <li><strong>Track Progress:</strong> Monitor your learning journey with detailed statistics and performance analytics</li>
           </ul>
 
-          <h5 class="mt-4">Who We Are</h5>
+          <h5>👨‍💻 Who We Are</h5>
           <p>
-            Streak Manager was built by a student developer passionate about productivity and habit formation. 
-            This project started as a personal tool to track coding habits and grew into a full-featured 
-            habit tracker designed to help anyone build consistency in their life.
+            QuickPrep was built by a passionate student developer who understands the challenges of competitive exam preparation. Starting as a personal learning tool to make studying more efficient, it has evolved into a comprehensive AI-powered platform designed to help students like you succeed in competitive exams such as JEE, NEET, and board examinations.
           </p>
 
-          <h5 class="mt-4">Our Values</h5>
+          <h5>💎 Our Values</h5>
           <ul>
-            <li><strong>Simplicity:</strong> Clean, intuitive interface without unnecessary complexity</li>
-            <li><strong>Privacy:</strong> We collect only what's necessary and never sell your data</li>
-            <li><strong>Transparency:</strong> Open about how we operate and what we do with your information</li>
-            <li><strong>Continuous Improvement:</strong> Regular updates based on user feedback</li>
+            <li><strong>Smart Learning:</strong> We leverage AI to provide personalized learning experiences that adapt to your needs</li>
+            <li><strong>Privacy First:</strong> Your notes and data are completely yours. We never share or sell your information</li>
+            <li><strong>Student-Focused:</strong> Built by students, for students. We understand your challenges and needs</li>
+            <li><strong>Simplicity:</strong> Clean, intuitive interface without unnecessary complexity or distractions</li>
+            <li><strong>Continuous Improvement:</strong> We regularly update our platform based on user feedback and emerging technologies</li>
           </ul>
 
-          <h5 class="mt-4">Contact Us</h5>
+          <h5>🎓 Why QuickPrep?</h5>
+          <ul>
+            <li>AI-powered study tools that save you hours of manual work</li>
+            <li>Personalized revision schedules that optimize your learning</li>
+            <li>Secure cloud storage for all your study materials</li>
+            <li>Free to use with no hidden charges or premium walls</li>
+            <li>Built for Indian competitive exams and board examinations</li>
+          </ul>
+
+          <h5>📧 Contact Us</h5>
           <p>
             Have questions, suggestions, or feedback? We'd love to hear from you!<br>
-            Email: <a href="mailto:streakmanager001@gmail.com">streakmanager001@gmail.com</a>
+            <strong>Email:</strong> <a href="mailto:quickprep001@gmail.com">quickprep001@gmail.com</a><br>
+            <strong>GitHub:</strong> <a href="https://github.com/GURUPREET6365" target="_blank">@GURUPREET6365</a><br>
+            <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/gurupreet-kumar-467ab4375/" target="_blank">Gurupreet Kumar</a>
           </p>
         </div>
       </div>
-    </div>
 
-    <!-- Privacy Policy Section -->
-    <div class="tab-pane fade" id="privacy" role="tabpanel">
-      <div class="card shadow-sm">
-        <div class="card-body p-4 p-md-5">
-          <h1 class="h3 mb-4">Privacy Policy</h1>
-          <p class="text-muted">Last updated: October 22, 2025</p>
+      <!-- Privacy Policy Section -->
+      <div class="tab-pane fade" id="privacy" role="tabpanel" aria-labelledby="privacy-tab">
+        <div class="about-card">
+          <h2>Privacy Policy</h2>
+          <p class="about-subtitle">Last updated: November 2025</p>
 
-          <h5 class="mt-4">Introduction</h5>
+          <h5>Introduction</h5>
           <p>
-            Your privacy is important to us. This Privacy Policy explains how Streak Manager collects, 
-            uses, and protects your personal information when you use our service.
+            Your privacy is important to us. This Privacy Policy explains how QuickPrep collects, uses, and protects your personal information when you use our service.
           </p>
 
-          <h5 class="mt-4">Information We Collect</h5>
+          <h5>Information We Collect</h5>
           <p><strong>Account Information:</strong></p>
           <ul>
-            <li>Email address</li>
-            <li>Username</li>
-            <li>First and last name</li>
-            <li>Password (stored securely using encryption)</li>
+            <li>Email address and phone number (optional)</li>
+            <li>Username and full name</li>
+            <li>Password (encrypted and hashed securely)</li>
           </ul>
-          <p><strong>Usage Data:</strong></p>
+          <p><strong>Learning Data:</strong></p>
           <ul>
-            <li>Streak titles and descriptions you create</li>
-            <li>Daily goal entries</li>
-            <li>Completion dates and streak statistics</li>
-            <li>Account creation and last update timestamps</li>
+            <li>Your study notes and learning materials</li>
+            <li>Practice questions and your answers</li>
+            <li>Revision history and learning statistics</li>
+            <li>Last login and activity timestamps</li>
+            <li>Study preferences and goals</li>
           </ul>
 
-          <h5 class="mt-4">How We Use Your Information</h5>
+          <h5>How We Use Your Information</h5>
           <ul>
-            <li><strong>Provide Services:</strong> To create and maintain your account, store your streaks and goals</li>
-            <li><strong>Authentication:</strong> To verify your identity and secure your account</li>
-            <li><strong>Communication:</strong> To send password reset emails and important service updates</li>
-            <li><strong>Improve Service:</strong> To understand how users interact with features and make improvements</li>
+            <li><strong>Provide Services:</strong> Store and manage your notes, generate practice questions, schedule revisions, and track progress</li>
+            <li><strong>AI Enhancement:</strong> Analyze your learning patterns to improve AI accuracy and generate better study materials for you</li>
+            <li><strong>Authentication:</strong> Verify your identity and keep your account secure from unauthorized access</li>
+            <li><strong>Communication:</strong> Send you password resets, security alerts, and important service updates</li>
+            <li><strong>Service Improvement:</strong> Understand how you use QuickPrep to improve features and user experience</li>
           </ul>
 
-          <h5 class="mt-4">Data Storage and Security</h5>
+          <h5>Data Storage and Security</h5>
+          <ul>
+            <li>All passwords are hashed using industry-standard encryption (PBKDF2 with Django)</li>
+            <li>Your notes are stored in a secure database with role-based access controls</li>
+            <li>All connections use HTTPS encryption in production environment</li>
+            <li>We perform regular security audits and vulnerability assessments</li>
+            <li>We do not store payment information (QuickPrep is completely free)</li>
+            <li>Data is backed up regularly to prevent accidental loss</li>
+          </ul>
+
+          <h5>Third-Party Services</h5>
+          <ul>
+            <li><strong>Hosting:</strong> We use secure cloud hosting providers to store and serve your data</li>
+            <li><strong>Email:</strong> We use email services to send you important notifications</li>
+            <li><strong>AI Services:</strong> We may use AI APIs to generate practice questions (your data remains private)</li>
+          </ul>
+
+          <h5>Your Rights</h5>
+          <ul>
+            <li><strong>Access:</strong> Download all your data anytime from your account settings</li>
+            <li><strong>Edit:</strong> Update your profile information and delete specific notes</li>
+            <li><strong>Delete:</strong> Request complete account deletion with all associated data permanently removed</li>
+            <li><strong>Withdraw Consent:</strong> Stop our use of your data for improvements and analytics</li>
+          </ul>
+
+          <h5>Data Retention</h5>
           <p>
-            We store your data securely using industry-standard practices:
-          </p>
-          <ul>
-            <li>Passwords are hashed using Django's secure password hashing (PBKDF2)</li>
-            <li>Data is stored in a protected database with access controls</li>
-            <li>Connections use HTTPS encryption in production</li>
-            <li>We do not store payment information (service is currently free)</li>
-          </ul>
-
-          <h5 class="mt-4">Third-Party Services</h5>
-          <p>We may use the following third-party services:</p>
-          <ul>
-            <li><strong>Hosting Provider:</strong> To host and serve the application</li>
-            <li><strong>Email Service:</strong> To send password reset and notification emails</li>
-          </ul>
-          <p>We do not sell or share your personal data with third parties for marketing purposes.</p>
-
-          <h5 class="mt-4">Your Rights</h5>
-          <p>You have the right to:</p>
-          <ul>
-            <li><strong>Access:</strong> View all data we have about you</li>
-            <li><strong>Edit:</strong> Update your account information at any time</li>
-            <li><strong>Delete:</strong> Request complete deletion of your account and all associated data</li>
-            <li><strong>Export:</strong> Request a copy of your data (feature coming soon)</li>
-          </ul>
-
-          <h5 class="mt-4">Data Retention</h5>
-          <p>
-            We retain your data as long as your account is active. If you delete your account, 
-            all personal information and associated streaks/goals are permanently removed from our systems.
+            We retain your data as long as your account is active. When you delete your account, all personal information and study materials are permanently removed from our systems within 30 days.
           </p>
 
-          <h5 class="mt-4">Cookies and Tracking</h5>
+          <h5>Cookies and Tracking</h5>
+          <ul>
+            <li>We use essential session cookies to keep you logged in</li>
+            <li>We do not use tracking cookies or third-party analytics that track your behavior</li>
+            <li>Your privacy preferences are always respected</li>
+          </ul>
+
+          <h5>Children's Privacy</h5>
           <p>
-            We use essential cookies to maintain your login session. We do not use tracking cookies 
-            or third-party analytics at this time.
+            QuickPrep is intended for students aged 13 and above. If you are under 13, please obtain parental consent. If we discover we have collected data from a child under 13 without consent, we will delete it immediately.
           </p>
 
-          <h5 class="mt-4">Changes to This Policy</h5>
+          <h5>Changes to This Policy</h5>
           <p>
-            We may update this Privacy Policy from time to time. We will notify users of significant 
-            changes via email or a notice on the website.
+            We may update this Privacy Policy from time to time. We will notify you of significant changes via email or a prominent notice on the website. Your continued use of QuickPrep after changes constitutes your acceptance of the new policy.
           </p>
 
-          <h5 class="mt-4">Contact Us</h5>
+          <h5>Contact Us</h5>
           <p>
-            For privacy-related questions or to exercise your rights, contact us at:<br>
-            Email: <a href="mailto:streakmanager001@gmail.com">streakmanager001@gmail.com</a>
+            For privacy-related questions or to exercise your rights:<br>
+            <strong>Email:</strong> <a href="mailto:quickprep001@gmail.com">quickprep001@gmail.com</a>
           </p>
         </div>
       </div>
-    </div>
 
-    <!-- Terms of Service Section -->
-    <div class="tab-pane fade" id="terms" role="tabpanel">
-      <div class="card shadow-sm">
-        <div class="card-body p-4 p-md-5">
-          <h1 class="h3 mb-4">Terms of Service</h1>
-          <p class="text-muted">Last updated: October 22, 2025</p>
+      <!-- Terms of Service Section -->
+      <div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">
+        <div class="about-card">
+          <h2>Terms of Service</h2>
+          <p class="about-subtitle">Last updated: November 2025</p>
 
-          <h5 class="mt-4">Agreement to Terms</h5>
+          <h5>Agreement to Terms</h5>
           <p>
-            By accessing and using Streak Manager, you agree to be bound by these Terms of Service. 
-            If you do not agree to these terms, please do not use our service.
+            By accessing and using QuickPrep, you agree to be bound by these Terms of Service. If you disagree with any part of these terms, you may not use the service. We reserve the right to modify these terms at any time.
           </p>
 
-          <h5 class="mt-4">Use of Service</h5>
+          <h5>Use of Service</h5>
           <p><strong>Permitted Use:</strong></p>
           <ul>
-            <li>Create an account and track your personal habits and goals</li>
-            <li>Use the service for personal, non-commercial purposes</li>
-            <li>Access your data from any device where you're logged in</li>
+            <li>Create personal study materials and organize your learning</li>
+            <li>Use AI features to generate practice questions from your notes</li>
+            <li>Access your account from any device where you're logged in</li>
+            <li>Participate in forums and community features (if available)</li>
           </ul>
           <p><strong>Prohibited Use:</strong></p>
           <ul>
-            <li>Share your account credentials with others</li>
-            <li>Attempt to hack, reverse engineer, or exploit the service</li>
-            <li>Use automated scripts or bots to interact with the service</li>
-            <li>Post illegal, harmful, or offensive content</li>
-            <li>Violate any applicable laws or regulations</li>
+            <li>Share your account credentials or allow others to use your account</li>
+            <li>Attempt to hack, reverse-engineer, or exploit the service</li>
+            <li>Use bots, automated scripts, or scrapers to access QuickPrep</li>
+            <li>Post illegal, harmful, abusive, or offensive content</li>
+            <li>Violate any applicable local, national, or international laws</li>
+            <li>Attempt to bypass security measures or access unauthorized areas</li>
           </ul>
 
-          <h5 class="mt-4">Account Responsibilities</h5>
+          <h5>Your Responsibilities</h5>
           <ul>
             <li>You are responsible for maintaining the confidentiality of your password</li>
             <li>You must provide accurate and complete registration information</li>
             <li>You are responsible for all activities that occur under your account</li>
-            <li>Notify us immediately of any unauthorized use of your account</li>
+            <li>You must report unauthorized account access immediately to us</li>
+            <li>You must not use QuickPrep for any illegal or unauthorized purposes</li>
           </ul>
 
-          <h5 class="mt-4">Service Availability</h5>
+          <h5>Service Availability</h5>
           <p>
-            We strive to keep Streak Manager available 24/7, but we do not guarantee uninterrupted access. 
-            The service is provided "as is" without warranties of any kind. We may temporarily suspend 
-            access for maintenance or updates.
+            We strive for 99.9% uptime and continuous service availability. However, we do not guarantee uninterrupted access at all times. The service is provided "as is" without warranties. We reserve the right to perform maintenance, updates, or improvements that may temporarily suspend access.
           </p>
 
-          <h5 class="mt-4">Data and Backups</h5>
-          <p>
-            While we take reasonable measures to protect your data, we are not liable for data loss 
-            due to technical failures, security breaches, or other unforeseen events. We recommend 
-            keeping your own records of important information.
-          </p>
-
-          <h5 class="mt-4">Intellectual Property</h5>
+          <h5>Data and Backups</h5>
           <ul>
-            <li>You retain ownership of the content you create (streaks, goals, notes)</li>
-            <li>We retain ownership of the Streak Manager code, design, and branding</li>
-            <li>You grant us a license to store and display your content as necessary to provide the service</li>
+            <li>While we take reasonable measures to protect your data, we are not liable for data loss due to technical failures, security breaches, or unforeseen events</li>
+            <li>We recommend regularly downloading backups of your important study materials</li>
+            <li>We maintain automatic backups for disaster recovery purposes</li>
           </ul>
 
-          <h5 class="mt-4">Termination</h5>
+          <h5>Intellectual Property</h5>
+          <ul>
+            <li>You retain full ownership of all study materials you create</li>
+            <li>You may export or delete your data at any time</li>
+            <li>We retain ownership of the QuickPrep platform, code, design, and branding</li>
+            <li>You grant us a non-exclusive license to store and display your content to provide the service</li>
+            <li>You may not use QuickPrep content for commercial purposes</li>
+          </ul>
+
+          <h5>Account Termination</h5>
+          <ul>
+            <li>You can delete your account at any time from your profile settings</li>
+            <li>All data will be permanently removed within 30 days of account deletion</li>
+            <li>We reserve the right to suspend or terminate accounts that violate these terms</li>
+            <li>Accounts inactive for 2 years may be subject to deletion</li>
+          </ul>
+
+          <h5>Limitation of Liability</h5>
           <p>
-            We reserve the right to suspend or terminate your account if you violate these Terms of Service. 
-            You may delete your account at any time through the account settings page. Upon termination, 
-            your data will be permanently deleted.
+            To the maximum extent permitted by law, QuickPrep and its creators shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the service, including but not limited to data loss, service interruptions, or failure to achieve academic goals or results.
           </p>
 
-          <h5 class="mt-4">Limitation of Liability</h5>
+          <h5>Indemnification</h5>
           <p>
-            To the maximum extent permitted by law, Streak Manager and its creators shall not be liable 
-            for any indirect, incidental, special, or consequential damages arising from your use of the service, 
-            including but not limited to data loss, service interruptions, or failure to achieve habits or goals.
+            You agree to indemnify and hold harmless QuickPrep and its creators from any claims, damages, losses, or expenses (including legal fees) arising from your violation of these terms, misuse of the service, or violation of any laws.
           </p>
 
-          <h5 class="mt-4">Indemnification</h5>
+          <h5>Modifications to Service</h5>
           <p>
-            You agree to indemnify and hold harmless Streak Manager from any claims, damages, or expenses 
-            arising from your violation of these terms or misuse of the service.
+            We reserve the right to modify, suspend, or discontinue any feature of QuickPrep at any time with or without notice. We will make reasonable efforts to notify you of significant changes that affect your use.
           </p>
 
-          <h5 class="mt-4">Modifications to Service</h5>
+          <h5>Governing Law</h5>
           <p>
-            We reserve the right to modify, suspend, or discontinue any part of the service at any time 
-            with or without notice. We will make reasonable efforts to notify users of significant changes.
+            These Terms shall be governed by and construed in accordance with the laws of India, without regard to its conflict of law provisions. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts in India.
           </p>
 
-          <h5 class="mt-4">Changes to Terms</h5>
+          <h5>Dispute Resolution</h5>
+          <ul>
+            <li>We encourage you to contact us first to resolve any disputes</li>
+            <li>Any disputes shall first be resolved through good faith negotiation</li>
+            <li>If negotiation fails, disputes may be resolved through arbitration or mediation</li>
+          </ul>
+
+          <h5>Severability</h5>
           <p>
-            We may update these Terms of Service from time to time. Continued use of the service after 
-            changes constitutes acceptance of the new terms. We will notify users of material changes 
-            via email or website notice.
+            If any provision of these Terms is found to be unenforceable, the remaining provisions will continue in full force and effect. We will replace the unenforceable provision with an enforceable one that reflects our original intent.
           </p>
 
-          <h5 class="mt-4">Governing Law</h5>
+          <h5>Contact Information</h5>
           <p>
-            These Terms shall be governed by and construed in accordance with the laws of India, 
-            without regard to its conflict of law provisions.
-          </p>
-
-          <h5 class="mt-4">Dispute Resolution</h5>
-          <p>
-            Any disputes arising from these Terms or use of the service shall be resolved through 
-            good faith negotiation. If negotiation fails, disputes shall be subject to the exclusive 
-            jurisdiction of the courts in [Your City/State].
-          </p>
-
-          <h5 class="mt-4">Contact Information</h5>
-          <p>
-            For questions about these Terms of Service, contact us at:<br>
-            Email:  <a href="mailto:streakmanager001@gmail.com">streakmanager001@gmail.com</a>
-          </p>
-
-          <h5 class="mt-4">Severability</h5>
-          <p>
-            If any provision of these Terms is found to be unenforceable, the remaining provisions 
-            will continue in full force and effect.
+            For questions about these Terms of Service or to report violations:<br>
+            <strong>Email:</strong> <a href="mailto:quickprep001@gmail.com">quickprep001@gmail.com</a>
           </p>
         </div>
       </div>
+
     </div>
 
   </div>
+</section>
 
-</div>
-{% endblock %}
+<!-- Handle URL fragments for direct navigation -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check if there's a hash in the URL (e.g., #privacy-tab, #terms-tab)
+    if (window.location.hash) {
+      const hash = window.location.hash.substring(1); // Remove #
+      const tabButton = document.getElementById(hash);
+      if (tabButton) {
+        // Initialize Bootstrap Tab and show it
+        const tab = new bootstrap.Tab(tabButton);
+        tab.show();
+      }
+    }
+  });
+</script>
+
+<style>
+  /* Using classes from main.html */
+
+
+  .nav-link.active {
+    color: #38bdf8 !important;
+    border-bottom-color: #38bdf8 !important;
+  }
+
+  .nav-link:hover {
+    color: #38bdf8 !important;
+    border-bottom-color: #38bdf8 !important;
+  }
+
+  a[href^="mailto:"],
+  a[href^="https://"] {
+    color: #38bdf8;
+    transition: all 0.3s ease;
+  }
+
+  a[href^="mailto:"]:hover,
+  a[href^="https://"]:hover {
+    color: #0ea5e9;
+  }
+
+  @media (max-width: 576px) {
+    .nav-link {
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+{% endblock content %}

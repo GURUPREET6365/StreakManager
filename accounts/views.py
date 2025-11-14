@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, LoginForm
 from .tokens import EmailVerificationTokenGenerator
 from django.contrib.auth import get_user_model
 
@@ -47,7 +47,7 @@ def register_view(request):
                 email_obj = EmailMessage(
                     subject=mail_subject,
                     body=message,
-                    from_email=os.getenv('EMAIL_HOST_USER', 'from@example.com'),
+                    from_email=os.getenv('EMAIL_HOST_USER', 'quickprep001@gmail.com'),
                     to=[user.email]
                 )
                 email_obj.content_subtype = 'html'
@@ -103,27 +103,35 @@ def verify_email_view(request, uidb64, token):
         return redirect('login')
     else:
         messages.error(request, 'Verification link is invalid or has expired.')
+        user.delete()
         return redirect('register')
     
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        form = LoginForm(request.POST)
+        if form.is_valid():
 
-        user = authenticate(request,
-                            username=username,
-                            password=password)
-        if user is not None:
-            #login(request, user): This function, also from django.contrib.auth, is crucial for establishing the user's session. It takes the request object and the authenticated user object as arguments. Its primary role is to set up the user's session in Django's authentication system, marking them as logged in. This includes storing the user's ID in the session, which allows Django to recognize the user on subsequent requests.
-            messages.success(request, 'Logged in successful')
-            login(request, user)
-            return redirect('home')
+            username=form.cleaned_data['username']
+            password=form.cleaned_data['password']
+
+            user = authenticate(request,
+                                username=username,
+                                password=password)
+            if user is not None:
+                #login(request, user): This function, also from django.contrib.auth, is crucial for establishing the user's session. It takes the request object and the authenticated user object as arguments. Its primary role is to set up the user's session in Django's authentication system, marking them as logged in. This includes storing the user's ID in the session, which allows Django to recognize the user on subsequent requests.
+                messages.success(request, 'Logged in successful')
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.error(request, 'Invalid credentials.')
+                return redirect('login')
         else:
-            messages.error(request, 'Invalid credentials.')
-            return redirect('login')
-    else:
-        return render(request, 'accounts/login.html')
+            return render(request, 'accounts/login.html', {'form':form,})
+        
+    return render(request, 'accounts/login.html', {
+        'form':LoginForm,
+    })
 
 
 @login_required
@@ -142,7 +150,7 @@ def delete_view(request):
         messages.info(request, 'Account deleted.')
         return redirect('home')
     else:
-        return render(request, 'accounts/delete.html')
+        messages.error(request, 'An error occured.')
 
 @login_required
 def profile(request):

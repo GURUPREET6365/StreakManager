@@ -1,51 +1,55 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Login • Streak Manager</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login • QuickPrep</title>
 
   <!-- Bootstrap 5 CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
-  <!-- Bootstrap Icons (optional) -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
-  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+  
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
-<body class="bg-light d-flex flex-column min-vh-100">
+<body>
 
-  <!-- Top brand / nav (minimal) -->
-  <nav class="navbar navbar-light bg-white border-bottom">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-        <i class="bi bi-lightning-charge-fill text-primary me-2"></i>
-        <span class="fw-semibold">Streak Manager</span>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+        <i class="bi bi-lightning-charge-fill"></i> QuickPrep
       </a>
-      <div class="d-flex">
-        <a href="{% url 'register' %}" class="btn btn-outline-primary btn-sm">Register</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a href="{% url 'register' %}" class="btn btn-outline-light btn-sm">
+              <i class="bi bi-person-plus"></i> Register
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Page content -->
+  <!-- Page Content -->
   <main class="container flex-grow-1">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center w-100">
       <div class="col-12 col-md-8 col-lg-5 col-xl-4">
-        <div class="card shadow-sm my-5">
+        <div class="card shadow my-5">
           <div class="card-body p-4 p-md-5">
 
-            <h1 class="h3 mb-3 text-center">Login</h1>
-            <p class="text-center text-muted mb-4">
-              Welcome back! Continue your streaks.
+            <h1 class="h3 mb-3 text-center">Welcome to QuickPrep</h1>
+            <p class="text-center mb-4">
+              Sign in to boost your preparation with AI-powered learning.
             </p>
 
-            <!-- Django messages -->
+            <!-- Django Messages -->
             {% if messages %}
               {% for message in messages %}
                 <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
@@ -55,43 +59,54 @@
               {% endfor %}
             {% endif %}
 
-            <form method="POST" action="{% url 'login' %}" novalidate>
+            <form method="POST" action="{% url 'login' %}" >
               {% csrf_token %}
 
+              <!-- Username Field -->
               <div class="mb-3">
                 <label for="id_username" class="form-label">Username</label>
                 <div class="input-group">
-                  <span class="input-group-text"><i class="bi bi-person"></i></span>
-                  <input id="id_username" name="username" type="text" class="form-control" required />
+                  <span class="input-group-text">
+                    <i class="bi bi-person"></i>
+                  </span>
+                
+                    {{form.username}}
                 </div>
               </div>
 
-              <div class="mb-3">
-                <label for="id_password" class="form-label">Password</label>
+              <!-- Password Field -->
+             <div class="col-12">
+                <label for="id_password1" class="form-label">Password</label>
                 <div class="input-group">
-                  <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                  <input id="id_password" name="password" type="password" class="form-control" required />
+                  <span class="input-group-text">
+                    <i class="bi bi-lock-fill"></i>
+                  </span>
+                  {{form.password}}
+                  
+                  <!-- Eye Button -->
+                  <button class="btn btn-outline-secondary" type="button" id="togglePassword1">
+                    <i class="bi bi-eye-slash" id="eyeIcon1"></i>
+                  </button>
                 </div>
+              <!-- Remember & Forgot Password -->
+              <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <a href="{% url 'password_change' %}" class="small">Forgot password?</a>
               </div>
 
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="1" id="remember_me" disabled>
-                </div>
-                <a href="{% url 'password_change' %}">Forget Password</a>
-
-              </div>
-
+              <!-- Submit Button -->
               <div class="d-grid">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary btn-lg">
                   <i class="bi bi-box-arrow-in-right"></i> Login
                 </button>
               </div>
             </form>
 
-            <div class="text-center mt-4">
-              <span class="text-muted">New user?</span>
-              <a href="{% url 'register' %}">Register here</a>.
+            <!-- Sign Up Link -->
+            <div class="text-center mt-4 pt-3 border-top" style="border-color: rgba(56, 189, 248, 0.1) !important;">
+              <span class="text-muted small">Don't have an account?</span>
+              <br>
+              <a href="{% url 'register' %}">Sign up here</a>
             </div>
 
           </div>
@@ -101,13 +116,19 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-white border-top mt-auto">
-    <div class="container py-3 text-center text-muted small">
-      &copy; 2025 Streak Manager. All rights reserved.
+  <footer class="py-3 mt-auto">
+    <div class="container text-center small">
+      <p class="mb-2">&copy; 2025 QuickPrep. Built with <i class="bi bi-heart-fill" style="color: #ef4444;"></i> in Bharat.</p>
+      <p class="mb-0">
+        <a href="{% url 'about_us' %}#about-tab">About</a> • 
+                <a href="{% url 'about_us' %}#privacy-tab">Privacy</a> • 
+                <a href="{% url 'about_us' %}#terms-tab">Terms</a>
+      </p>
     </div>
   </footer>
 
   <!-- Bootstrap 5 JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'js/login.js' %}"></script>
 </body>
 </html>

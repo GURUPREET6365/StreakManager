@@ -22,7 +22,7 @@ def home(request):
     today = timezone.localdate() 
     incomplete_goal = []
         # below are the two boolean checkng statement that check and return true or false.
-    goals = UsersGoals.objects.filter(user_id=request.user.id)
+    goals = UsersGoals.objects.filter(user_id=request.user.id, is_deleted = False, is_active=True)
     for i_goal in goals:
         created_date = timezone.localdate(i_goal.created_at)
         deadline_date = created_date + timedelta(days=1)
@@ -31,7 +31,7 @@ def home(request):
 
 
     incomplete_streaks = []
-    streaks = Streak.objects.filter(user_id=request.user.id)
+    streaks = Streak.objects.filter(user_id=request.user.id, is_deleted = False, is_active=True)
     for i_streaks in streaks:
         if i_streaks.last_completed != today:
             incomplete_streaks.append(i_streaks)

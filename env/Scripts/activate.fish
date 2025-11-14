@@ -75,7 +75,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV 'C:\MAIN FOLDER\GURUPREET\PROJECTS\STREAK MANAGER\env'
+set -gx VIRTUAL_ENV 'C:\MAIN FOLDER\GURUPREET\PROJECTS\QuickPrep\env'
 
 # https://github.com/fish-shell/fish-shell/issues/436 altered PATH handling
 if test (string sub -s 1 -l 1 $FISH_VERSION) -lt 3
