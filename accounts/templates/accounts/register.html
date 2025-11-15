@@ -57,21 +57,21 @@
               <div class="row g-3">
                 <div class="col-md-6">
                   <label for="id_first_name" class="form-label">First Name</label>
-                  <input id="id_first_name" name="first_name" type="text" class="form-control" required />
+                  {{form.first_name}}
                 </div>
                 <div class="col-md-6">
                   <label for="id_last_name" class="form-label">Last Name</label>
-                  <input id="id_last_name" name="last_name" type="text" class="form-control" required />
+                  {{form.last_name}}
                 </div>
 
                 <div class="col-12">
                   <label for="id_username" class="form-label">Username</label>
-                  <input id="id_username" name="username" type="text" class="form-control" required />
+                  {{form.username}}
                 </div>
 
                 <div class="col-12">
                   <label for="id_email" class="form-label">Email</label>
-                  <input id="id_email" name="email" type="email" class="form-control" required />
+                  {{form.email}}
                 </div>
 
                 <div class="col-12">
@@ -80,7 +80,7 @@
                   <span class="input-group-text">
                     <i class="bi bi-lock-fill"></i>
                   </span>
-                  <input id="id_password1" name="password1" type="password" class="form-control" required />
+                  {{form.password1}}
                   
                   <!-- Eye Button -->
                   <button class="btn btn-outline-secondary" type="button" id="togglePassword1">
@@ -98,7 +98,7 @@
                   <span class="input-group-text">
                     <i class="bi bi-shield-fill"></i>
                   </span>
-                  <input id="id_password2" name="password2" type="password" class="form-control" required />
+                  {{form.password2}}
 
                   <!-- Eye Button -->
                   <button class="btn btn-outline-secondary" type="button" id="togglePassword2">

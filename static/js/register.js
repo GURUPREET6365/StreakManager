@@ -8,7 +8,7 @@ eye1 = document.getElementById('eyeIcon1')
 eye_button1.addEventListener('click', function(){
     
     if (password1.type === 'password') {
-        password.type = 'text';
+        password1.type = 'text';
         eye1.classList.replace('bi-eye-slash', 'bi-eye')        
     }
     else  {

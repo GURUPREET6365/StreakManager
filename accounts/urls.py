@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
-from .forms import CustomPasswordChangeForm
+
 
 urlpatterns = [
     path('register/', views.register_view, name='register'),
@@ -9,15 +9,13 @@ urlpatterns = [
     path('logout/',   views.logout_view,   name='logout'),
     path('delete/',   views.delete_view,   name='delete_account'),
        # Use form_class parameter to specify your custom form
-    path('password-change/', auth_views.PasswordChangeView.as_view(
-        template_name='accounts/password_change.html',
-        success_url='/password-change/done/',
-        form_class=CustomPasswordChangeForm  # Add this line
-    ), name='password_change'),
-    
-    path('password-change/done/', auth_views.PasswordChangeDoneView.as_view(
-        template_name='accounts/profile.html'
-    ), name='password_change_done'),
     path('profile/', views.profile, name='profile'),
-    path('verify-email/<str:uidb64>/<str:token>/', views.verify_email_view, name='verify_email')
+    path('verify-email/<str:uidb64>/<str:token>/', views.verify_email_view, name='verify_email'),
+    path('changepassword/', views.changepassword, name='changepassword'),
+    path('changeusername/', views.changeusername, name='changeusername'),
+    path('changefnamelname/', views.changefnamelname, name='changefnamelname'),
+    path('forgetpassword/', views.forgetpassword, name='forgetpassword'),
+    path('reset-password-token/<str:uidb64>/<str:token>/', views.checkresetpasswordtoken, name='checkresetpasswordtoken'),
+
+    path('reset-password/<int:pk>', views.resetpassword, name='reset-password')
 ]
