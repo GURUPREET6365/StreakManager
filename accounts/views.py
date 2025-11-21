@@ -10,13 +10,19 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 import os
+from django.utils.dateparse import parse_datetime
 from dotenv import load_dotenv
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.auth import update_session_auth_hash
+import random
+from django.utils import timezone
+from datetime import timedelta
+from django.urls import reverse
 
 load_dotenv()
+import logging
 
-from .forms import CustomUserCreationForm, LoginForm, ChangePasswordForm, ChangeUsername, ChangeFnameLname
+from .forms import CustomUserCreationForm, LoginForm, ChangePasswordForm, ChangeUsername, ChangeFnameLname, ChangeEmail
 from .tokens import EmailVerificationTokenGenerator
 from django.contrib.auth import get_user_model
 
@@ -60,7 +66,7 @@ def register_view(request):
                 
             except Exception as e:
                 # Log the error for debugging
-                import logging
+                
                 logger = logging.getLogger(__name__)
                 logger.error(f"Email verification failed: {str(e)}")
                 
@@ -202,6 +208,8 @@ def checkresetpasswordtoken(request, uidb64, token):
         messages.error(request, 'Reset link is invalid or has expired.')
         return redirect('login')
 
+
+
 def resetpassword(request, pk):
     if request.method == 'POST':
         user = User.objects.get(pk=pk)
@@ -254,7 +262,7 @@ def profile(request):
             'pk':current_user.pk         
         }
     
-    return render(request, 'accounts/profile.html', {'user':user,'form':ChangePasswordForm, 'form1':ChangeUsername(instance=current_user), 'form2':ChangeFnameLname(instance=current_user)})
+    return render(request, 'accounts/profile.html', {'user':user,'form':ChangePasswordForm, 'form1':ChangeUsername(instance=current_user), 'form2':ChangeFnameLname(instance=current_user), 'form3':ChangeEmail(instance=current_user)})
 
 @login_required
 def changepassword(request):
@@ -311,7 +319,9 @@ def changeusername(request):
             messages.error(request, 'Provided username is not valid.\nIt should contains no space.')
             return redirect('profile')
           
-          
+
+
+@login_required   
 def changefnamelname(request):
     user=request.user
     if request.method=='POST':
@@ -320,3 +330,101 @@ def changefnamelname(request):
             form.save()
             messages.success(request, 'Name has been changed')
             return redirect('profile')
+
+@login_required
+def changeemail(request):
+    user = request.user
+    old_email = user.email
+    if request.method == 'POST':
+        form = ChangeEmail(request.POST, instance=user)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            if email == old_email:
+                messages.info(request, 'New email should be different.')
+                return redirect('profile')
+            # Generating OTP...
+            otp = str(random.randint(100000, 999999))
+            time_now = timezone.now()
+            time_after_5min = timedelta(minutes=5)
+            expiry_time = time_now + time_after_5min
+            # ✅ CORRECT - Returns None if 'otp' doesn't exist
+            if request.session.get('otp'):  # Safe - won't raise KeyError
+                parsed_expiry_time_of_session = parse_datetime(request.session.get("otp_expiry"))
+                if time_now > parsed_expiry_time_of_session:
+                    request.session.pop('otp', None)
+                    request.session.pop('otp_expiry', None)
+
+            request.session['otp'] = otp
+            request.session['otp_expiry'] = expiry_time.isoformat()
+            
+            # Sending OTP through email.
+            try:
+                mail_subject = 'Change Email Otp'
+                message = render_to_string('accounts/change_email_send_template.html', {'user':user, 'otp':otp})
+                email_obj = EmailMessage(
+                    subject=mail_subject, 
+                    body=message,
+                    from_email=os.getenv('EMAIL_HOST_USER', 'quickprep001@gmail.com'),
+                    to=[email]
+                )
+                email_obj.content_subtype = 'html'
+                email_obj.send(fail_silently=False)
+                messages.success(request, 'OTP sent to your new email.')
+                return redirect('verifyotp', email=email)
+            
+
+            except Exception as e:
+                logger = logging.getLogger(__name__)
+                logger.error(f"Email verification failed: {str(e)}")
+                
+                messages.error(request, 'An error occured! Please try again..')
+                return redirect('profile')
+                
+            
+        else:
+            messages.error(request, 'Invalid data.')
+        
+            
+
+def is_otp_expired(request):
+    expiry_str = request.session.get("otp_expiry", None)
+    time_now = timezone.now()
+    if not expiry_str:
+        return True  # No expiry stored → treat as expired
+
+    parsed_expiry_time_of_session = parse_datetime(request.session.get("otp_expiry"))
+    if time_now > parsed_expiry_time_of_session:
+        request.session.pop('otp', None) 
+        request.session.pop("otp_expiry", None)
+
+        return True
+    else:
+        return False
+    
+
+
+@login_required
+def verifyotp(request, email):
+    user=request.user
+    
+    if request.method == 'POST':
+        user_input = request.POST.get("otp")
+        
+        # OR if single input:
+        stored_otp = request.session.get("otp")
+        if is_otp_expired(request):
+            messages.info(request, 'OTP is expired. Try again')
+            return redirect('profile')
+        if user_input == stored_otp:
+            user.email = email
+            user.save()
+            request.session.pop("otp", None)
+            request.session.pop("otp_expiry", None)
+            messages.success(request, "OTP verified successfully and email has been changed")
+            return redirect('profile')
+        else:
+            messages.error(request, 'Invalid OTP.')
+            return redirect('profile')
+
+
+    return render(request, 'accounts/verify_otp_page.html', {'email':email})

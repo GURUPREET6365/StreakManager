@@ -52,37 +52,3 @@ eyebutton3.addEventListener('click', function(){
     }
 })
 
-
-// This is for the edit email in the profile page for showing otp 
-const sendOtpBtn = document.getElementById("sendOtpBtn");
-const emailInput = document.getElementById("email");
-const otpBox = document.getElementById("otpBox");
-const saveBtn = document.getElementById("saveBtn");
-const verifyOtpBtn = document.getElementById("verifyOtpBtn");
-
-sendOtpBtn.addEventListener("click", function() {
-
-let email = emailInput.value;
-
-if (!email) {
-    alert("Please enter an email.");
-    return;
-}
-
-// TODO: Here you will send AJAX to backend to send OTP
-
-// Show OTP box
-otpBox.style.display = "block";
-
-// Disable email field
-emailInput.readOnly = true;
-
-// Hide Save button
-saveBtn.style.display = "none";
-
-// Hide Send OTP button
-sendOtpBtn.style.display = "none";
-
-// Show Verify OTP button
-verifyOtpBtn.style.display = "inline-block";
-});

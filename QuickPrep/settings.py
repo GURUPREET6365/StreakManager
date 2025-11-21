@@ -52,11 +52,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'streaks.apps.StreaksConfig',
+    # 'streaks.apps.StreaksConfig',
     'accounts.apps.AccountsConfig',
     'home.apps.HomeConfig',
-    'daily_goals.apps.DailyGoalsConfig',
-    'email_service.apps.EmailServiceConfig'
+    # 'daily_goals.apps.DailyGoalsConfig',
+    'email_service.apps.EmailServiceConfig',
+    'Notes.apps.NotesConfig'
 ]
 
 MIDDLEWARE = [
@@ -94,6 +95,7 @@ WSGI_APPLICATION = 'QuickPrep.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# The dj_database_url is the python library which take the information from the url we provide for the database and this database contains all the information of the database.
 DATABASES = {
     'default': dj_database_url.config(
         default=os.getenv('DATABASE_URL'),
@@ -149,17 +151,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# settings.py
 
-# EMAIL_BACKEND = os.getenv('EMAIL_BACKENED')
-# 
-
-# EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS ')
-# 
-# DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAI')
-
-# # Token expiration time (in seconds) — default is 3 days (259200 seconds)
-# 
 
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
@@ -169,3 +161,10 @@ EMAIL_HOST_USER = 'quickprep001@gmail.com'
 DEFAULT_FROM_EMAIL='quickprep001@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # Generate this from Google Account Security settings)
 PASSWORD_RESET_TIMEOUT = 3600 
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
+LOGIN_URL = 'login'

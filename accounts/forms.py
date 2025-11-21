@@ -116,3 +116,17 @@ class ChangeFnameLname(forms.ModelForm):
                 'placeholder': 'Enter first name',
             })
         }
+
+class ChangeEmail(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email']
+        widgets = {
+            'email':forms.EmailInput(attrs={
+                'class':'form-control',
+                'placeholder':'Enter New Email',
+                'id':'email',
+                'name':'email',
+                'type':'email'
+            })
+        }

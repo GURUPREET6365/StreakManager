@@ -260,61 +260,38 @@
   </div>
 
   <!-- Edit Email Modal -->
-<div class="modal fade" id="editEmailModal" tabindex="-1" aria-labelledby="editEmailLabel">
+<!-- Modal 1: Edit Email -->
+<div class="modal fade" id="editEmailModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-
       <div class="modal-header">
-        <h5 class="modal-title" id="editEmailLabel">Edit Email</h5>
+        <h5 class="modal-title">Edit Email</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-
-      <form method="POST" action="#">
+      <form method="POST" action="{% url 'changeemail' %}" id="changeEmailForm">
         {% csrf_token %}
         <div class="modal-body">
-
-          <!-- Email Input -->
           <div class="mb-3">
-            <label for="email" class="form-label">Email Address</label>
-            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
-            <div class="form-text" style="color: #94a3b8;">We'll send an OTP to this email.</div>
+            <label class="form-label">Email Address</label>
+            {{ form3.email }}
           </div>
-
-          <!-- Send OTP Button -->
-          <button type="button" id="sendOtpBtn" class="btn btn-primary btn-sm mb-3">
-            Send OTP
-          </button>
-
-          <!-- OTP Box (Initially Hidden) -->
-          <div id="otpBox" class="mb-3" style="display: none;">
-            <label for="otpInput" class="form-label">Enter OTP</label>
-            <input type="text" id="otpInput" name="otp" class="form-control" placeholder="Enter OTP">
-            <div class="form-text" style="color: #94a3b8;">Check your email for the OTP.</div>
-          </div>
-
         </div>
-
         <div class="modal-footer">
-
-          <!-- Cancel Button -->
           <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
-
-          <!-- Save Button (Hidden After Clicking Send OTP) -->
-          <button type="submit" id="saveBtn" class="btn btn-primary btn-sm">
-            <i class="bi bi-check2"></i> Save
-          </button>
-
-          <!-- Verify OTP Button (Initially Hidden) -->
-          <button type="submit" id="verifyOtpBtn" name="verify_otp" class="btn btn-success btn-sm" style="display:none;">
-            <i class="bi bi-shield-check"></i> Verify OTP
-          </button>
-
+          <button type="submit" class="btn btn-primary btn-sm">Send OTP</button>
         </div>
       </form>
-
     </div>
   </div>
 </div>
+
+<script>
+  document.getElementById('changeEmailForm').addEventListener('submit', function(e) {
+    // Form will submit normally and Django will redirect
+    // The page will reload with the new view
+  });
+</script>
+
 
   <!-- Change Password -->
     <div class="modal fade" id="resetpassword" tabindex="-1"  >
