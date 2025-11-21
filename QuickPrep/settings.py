@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 from pathlib import Path
 
 
@@ -57,7 +58,10 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     # 'daily_goals.apps.DailyGoalsConfig',
     'email_service.apps.EmailServiceConfig',
-    'Notes.apps.NotesConfig'
+    'Notes.apps.NotesConfig',
+    # Cloudinary apps (added these)
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -163,8 +167,29 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # Generate this from Goo
 PASSWORD_RESET_TIMEOUT = 3600 
 
 
-MEDIA_URL = '/media/'
+
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
 LOGIN_URL = 'login'
+
+# This is cloudaniry setup
+import cloudinary
+import cloudinary_storage
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_URL = '/media/'
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
+}
