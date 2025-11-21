@@ -20,6 +20,19 @@ import dj_database_url
 
 from dotenv import load_dotenv, find_dotenv
 
+
+try:
+    from . import secrets
+    SECRET_KEY = secrets.SECRET_KEY
+    EMAIL_HOST_USER = secrets.EMAIL_HOST_USER
+    EMAIL_HOST_PASSWORD = secrets.EMAIL_HOST_PASSWORD
+except ImportError:
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-key-for-testing')
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+
+
 # Load .env file - THIS MUST BE FIRST
 load_dotenv(find_dotenv())
 
@@ -100,12 +113,28 @@ WSGI_APPLICATION = 'QuickPrep.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 # The dj_database_url is the python library which take the information from the url we provide for the database and this database contains all the information of the database.
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
-        conn_max_age=600
-    )
-}
+if DEBUG:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600
+        )
+    }
+
+else:
+    # For PythonAnywhere (MySQL)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'quickprep$default',  # Replace with your actual values
+            'USER': 'quickprep',  # Your PythonAnywhere username
+            'PASSWORD': secrets.DATABASE_PASSWORD,
+            'HOST': 'quickprep.mysql.pythonanywhere-services.com',
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            },
+        }
+    }
 
 
 # Password validation
@@ -178,18 +207,20 @@ import cloudinary
 import cloudinary_storage
 
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
-}
+if secrets:
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': secrets.CLOUDINARY_CLOUD_NAME,
+        'API_KEY': secrets.CLOUDINARY_API_KEY,
+        'API_SECRET': secrets.CLOUDINARY_API_SECRET,
+    }
+else:
+    # Fallback to env vars if secrets.py not found (e.g. some server)
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+        'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+        'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MEDIA_URL = '/media/'
 
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': config('CLOUDINARY_API_KEY'),
-    'API_SECRET': config('CLOUDINARY_API_SECRET'),
-}
